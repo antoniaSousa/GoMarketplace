@@ -33,7 +33,9 @@ const CartProvider: React.FC = ({ children }) => {
       const storegeProducts = await AsyncStorage.getItem(
         '@GoMarkeplace:products',
       );
-      if (storegeProducts) setProducts(JSON.parse(storegeProducts));
+      if (storegeProducts) {
+        setProducts([...JSON.parse(storegeProducts)]);
+      }
     }
     loadProducts();
   }, []);
@@ -81,7 +83,7 @@ const CartProvider: React.FC = ({ children }) => {
 
       await AsyncStorage.setItem(
         '@GoMarkeplace:products',
-        JSON.stringify(products),
+        JSON.stringify(addProduct),
       );
     },
     [products],
@@ -93,14 +95,18 @@ const CartProvider: React.FC = ({ children }) => {
         itemProduct => itemProduct.id === id,
       );
 
-      if (productIndex < 0) return;
-      const addProduct = [...products];
+      if (productIndex <= 0) return;
+      let addProduct = [...products];
       addProduct[productIndex].quantity -= 1;
+
+      if (products[productIndex].quantity <= 0) {
+        addProduct = products.filter(productCart => productCart.id !== id);
+      }
       setProducts(addProduct);
 
       await AsyncStorage.setItem(
         '@GoMarkeplace:products',
-        JSON.stringify(products),
+        JSON.stringify(addProduct),
       );
     },
     [products],

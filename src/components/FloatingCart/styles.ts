@@ -25,6 +25,9 @@ export const CartTotalPrice = styled.Text`
 export const CartButton = styled.TouchableOpacity`
   flex-direction: row;
   background: #e83f5b;
+  background: #46a5df;
+  background: #46a5df;
+  background: #303030;
 
   flex: 1;
   padding: 20px 20px;

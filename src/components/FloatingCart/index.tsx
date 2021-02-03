@@ -25,19 +25,39 @@ const FloatingCart: React.FC = () => {
   const navigation = useNavigation();
 
   const cartTotal = useMemo(() => {
-    const valueTotal = products.reduce((accumalator, current): number => {
-      return current.quantity * current.price + accumalator;
+    const valueTotal = products.reduce((accumalator, current) => {
+      return accumalator + current.quantity * current.price;
     }, 0);
+    console.log(valueTotal, 'precoFl ');
     return formatValue(valueTotal);
   }, [products]);
 
   const totalItensInCart = useMemo(() => {
-    const total = products.reduce((accumulator, current): number => {
-      return current.quantity + accumulator;
-    }, 0);
-
+    const total = products.reduce(
+      (accumulator, current) => current.quantity,
+      0,
+    );
+    console.log(total);
     return total;
   }, [products]);
+
+  // const cartTotal = useMemo(() => {
+  //   const valueTotal = products.reduce((accumalator, current): number => {
+  //     const valueSubtotal = current.price * current.quantity;
+  //     return valueSubtotal;
+  //   }, 0);
+  //   console.log(valueTotal, 'valor');
+  //   return formatValue(valueTotal);
+  // }, [products]);
+
+  // const totalItensInCart = useMemo(() => {
+  //   const total = products.reduce((accumulator, current) => {
+  //     const productQuantity = current.quantity;
+  //     return productQuantity;
+  //   }, 0);
+  //   console.log(total, 'cart');
+  //   return total;
+  // }, [products]);
 
   return (
     <Container>
